@@ -20,15 +20,13 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $firstName;
 
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lastName;
 
