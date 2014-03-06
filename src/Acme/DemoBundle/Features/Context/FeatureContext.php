@@ -56,4 +56,20 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
         $em->createQuery('DELETE AcmeDemoBundle:User')->execute();
         $em->flush();
     }
+
+    /**
+     * @Given /^there are users:$/
+     */
+    public function thereAreUsers(TableNode $table)
+    {
+        $userManager = $this->kernel->getContainer()->get('fos_user.user_manager');
+        foreach ($table->getHash() as $hash) {
+            $user = $userManager->createUser();
+            $user->setUsername($hash['username']);
+            $user->setPlainPassword($hash['password']);
+            $user->setEmail($hash['email']);
+            $user->setEnabled(true);
+            $userManager->updateUser($user);
+        }
+    }
 }

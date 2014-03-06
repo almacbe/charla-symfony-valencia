@@ -9,7 +9,6 @@ Feature: User
         And I fill in "fos_user_registration_form_plainPassword_first" with "ilovesymfony"
         And I fill in "fos_user_registration_form_plainPassword_second" with "ilovesymfony"
         And I press "Register"
-        And show last response
         Then I should see "Logged in as symfony"
 
     Scenario: Register a user 2
@@ -21,3 +20,15 @@ Feature: User
             | fos_user_registration_form_plainPassword_second | ilovesymfony |
         And I press "Register"
         Then I should see "Logged in as symfony"
+
+    Scenario:
+        Given there are users:
+          | username    | password | email                   |
+          | symfony    |  ilovesymfony  | symfonyvlc@gmail.com |
+          | almacbe | 123 | email@alfonsomachado.com |
+        Given I go to "/login"
+        When I fill in the following:
+            | username | almacbe |
+            | password | 123 |
+        And I press "Login"
+        Then I should see "Welcome!"
