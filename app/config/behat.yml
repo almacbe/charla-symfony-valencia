@@ -11,3 +11,4 @@ default:
             browser_name: firefox
             javascript_session: selenium2
             selenium2: ~
+            show_cmd: open -a Google\ Chrome %s

@@ -46,17 +46,14 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     {
         $this->kernel = $kernel;
     }
-
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        $container = $this->kernel->getContainer();
-//        $container->get('some_service')->doSomethingWith($argument);
-//    }
-//
+    
+    /**
+     * @Given /^the database is clean$/
+     */
+    public function theDatabaseIsClean()
+    {
+        $em = $this->kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $em->createQuery('DELETE AcmeDemoBundle:User')->execute();
+        $em->flush();
+    }
 }
