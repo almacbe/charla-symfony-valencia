@@ -19,7 +19,14 @@ class DemoController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $loginUrlFacebook = $this->get('fos_facebook.api')->getLoginUrl(
+            array(
+                'redirect_uri' => $this->generateUrl('fos_facebook_security_check', array(), true),
+                'scope' => 'email'
+            )
+        );
+
+        return array('loginUrlFacebook' => $loginUrlFacebook);
     }
 
     /**

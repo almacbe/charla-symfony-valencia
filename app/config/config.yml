@@ -72,3 +72,18 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Acme\DemoBundle\Entity\User
+
+fos_facebook:
+    alias:  facebook
+    app_id: 229628700450870
+    secret: 1eea36c4e2223f0516c7b03baa0078ee
+    cookie: true
+    permissions: [email, user_birthday]
+
+services:
+    my.facebook.user:
+        class: Acme\DemoBundle\Security\User\Provider\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@fos_user.user_manager"
+            validator: "@validator"
