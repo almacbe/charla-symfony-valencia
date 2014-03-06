@@ -1,0 +1,13 @@
+default:
+    extensions:
+        Behat\Symfony2Extension\Extension:
+            mink_driver: true
+            kernel:
+                env: test
+                debug: true
+        Behat\MinkExtension\Extension:
+            base_url: http://charla.dev/app_dev.php
+            default_session: symfony2
+            browser_name: firefox
+            javascript_session: selenium2
+            selenium2: ~
