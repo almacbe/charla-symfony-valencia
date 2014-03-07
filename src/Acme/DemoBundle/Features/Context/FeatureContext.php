@@ -72,4 +72,13 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
             $userManager->updateUser($user);
         }
     }
+
+    /**
+     * @Given /^I wait (\d+) miliseconds$/
+     */
+    public function iWaitMiliseconds($arg1)
+    {
+        $minkSession = $this->getSession();
+        $minkSession->wait($arg1);
+    }
 }

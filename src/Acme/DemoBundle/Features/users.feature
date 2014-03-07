@@ -32,3 +32,12 @@ Feature: User
             | password | 123 |
         And I press "Login"
         Then I should see "Welcome!"
+    @dev @javascript
+    Scenario: Register with Facebook
+        Given I go to "/demo"
+        When I follow "facebookLoginUrl"
+        And I wait 2000 miliseconds
+        And I fill in "email" with "alfonso@geekshubs.com"
+        And I fill in "pass" with "19051987"
+        And I press "login"
+        Then I should see "Welcome"
