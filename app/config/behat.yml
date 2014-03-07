@@ -6,7 +6,7 @@ default:
                 env: test
                 debug: true
         Behat\MinkExtension\Extension:
-            base_url: http://charla.dev:8080/app_dev.php
+            base_url: http://charla.dev:8080/app_test.php
             default_session: symfony2
             browser_name: firefox
             javascript_session: selenium2
