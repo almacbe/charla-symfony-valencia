@@ -2,9 +2,8 @@
 
 namespace Acme\DemoBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -24,12 +23,10 @@ class User extends BaseUser
      */
     protected $firstName;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lastName;
-
 
     /**
      * @ORM\Column(name="facebookId", type="string", length=255, nullable=true)
@@ -61,7 +58,7 @@ class User extends BaseUser
         }
         if (isset($fbdata['username']) && !empty($fbdata['username'])) {
             $this->setUsername($fbdata['username']);
-        }else{
+        } else {
             $this->setUsername($fbdata['id']);
         }
     }
@@ -77,7 +74,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param string $facebookId
+     * @param  string $facebookId
      * @return void
      */
     public function setFacebookId($facebookId)
@@ -96,20 +93,20 @@ class User extends BaseUser
     /**
      * Set firstName
      *
-     * @param string $firstName
+     * @param  string $firstName
      * @return User
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -119,20 +116,20 @@ class User extends BaseUser
     /**
      * Set lastName
      *
-     * @param string $lastName
+     * @param  string $lastName
      * @return User
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {

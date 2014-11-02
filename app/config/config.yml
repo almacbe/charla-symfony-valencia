@@ -70,20 +70,31 @@ swiftmailer:
 
 fos_user:
     db_driver: orm
-    firewall_name: main
+    firewall_name: secure_area
     user_class: Acme\DemoBundle\Entity\User
+    registration:
+        confirmation:
+            enabled:    false
 
-fos_facebook:
-    alias:  facebook
-    app_id: 229628700450870
-    secret: 1eea36c4e2223f0516c7b03baa0078ee
-    cookie: true
-    permissions: [email, user_birthday]
+hwi_oauth:
+    firewall_name: secure_area
+    connect:
+        confirmation: true
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           514547748648349
+            client_secret:       4c3b599f634b596ceabe5c92ed4a179e
+            options:
+                display: page
+            scope:         "email"
+    fosub:
+        # try 30 times to check if a username is available (foo, foo1, foo2 etc)
+        username_iterations: 30
 
+        # mapping between resource owners (see below) and properties
+        properties:
+            facebook: facebookId
 services:
-    my.facebook.user:
-        class: Acme\DemoBundle\Security\User\Provider\FacebookProvider
-        arguments:
-            facebook: "@fos_facebook.api"
-            userManager: "@fos_user.user_manager"
-            validator: "@validator"
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider

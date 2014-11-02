@@ -8,31 +8,34 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        chain_provider:
-          chain:
-              providers: [fos_userbundle, my_fos_facebook_provider]
         fos_userbundle:
             id: fos_user.user_provider.username
-        my_fos_facebook_provider:
-            id: my.facebook.user
 
     firewalls:
-        main:
-            pattern: ^/
+        secure_area:
+            pattern: ^/secure_area
+
+            oauth:
+                resource_owners:
+                    facebook:       /secure_area/login_facebook
+                login_path:         /secure_area/connect
+                failure_path:       /secure_area/connect
+                check_path:         /secure_area/connect
+                provider: fos_userbundle
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider.fosub_bridge
 
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
+                check_path: /secure_area/login_check
+                login_path: /secure_area/login
+                default_target_path:            /secure_area/hello/name #default location to redirect after successful login
 
-            fos_facebook:
-                provider: my_fos_facebook_provider
-                app_url: "http://apps.facebook.com/appName/"
-                server_url: "http://ruzafa.dev/facebookApp/"
-                login_path: /login_facebook
-                check_path: /login_check_facebook
-
-            logout:       true
-            anonymous: true
+            anonymous: ~
+            logout:
+                path:           /secure_area/logout
+                target:         /secure_area/connect
 
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -55,8 +58,13 @@ security:
             #    realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] }
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/secure_area/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secure_area/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secure_area/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secure_area/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secure_area/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/secure_area, roles: ROLE_USER }
+        - { path: ^/admin/, roles: ROLE_ADMIN }
