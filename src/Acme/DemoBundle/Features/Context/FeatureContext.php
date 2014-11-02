@@ -3,37 +3,25 @@
 namespace Acme\DemoBundle\Features\Context;
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\MinkExtension\Context\MinkContext;
 
-use Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
-
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+use Behat\Gherkin\Node\TableNode;
 
 /**
  * Feature context.
  */
-class FeatureContext extends MinkContext implements KernelAwareInterface
+class FeatureContext extends MinkContext implements KernelAwareContext
 {
     private $kernel;
-    private $parameters;
 
     /**
      * Initializes context with parameters from behat.yml.
      *
      * @param array $parameters
      */
-    public function __construct(array $parameters)
+    public function __construct()
     {
-        $this->parameters = $parameters;
     }
 
     /**
@@ -46,7 +34,7 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     {
         $this->kernel = $kernel;
     }
-    
+
     /**
      * @Given /^the database is clean$/
      */

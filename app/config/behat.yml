@@ -1,19 +1,18 @@
 default:
     extensions:
         Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+            base_url: 'http://charla.dev:8080/app_test.php'
+            browser_name: firefox
+            sessions:
+                default:
+                    symfony2: ~
+                javascript:
+                    selenium2: ~
+            show_cmd: open -a Google\ Chrome %s
     suites:
         test_suite:
             type: symfony_bundle
             bundle: 'AcmeDemoBundle'
-        # Behat\Symfony2Extension\Extension:
-        #     mink_driver: true
-        #     kernel:
-        #         env: test
-        #         debug: true
-        # Behat\MinkExtension\Extension:
-        #     base_url: http://charla.dev:8080/app_test.php
-        #     default_session: symfony2
-        #     browser_name: firefox
-        #     javascript_session: selenium2
-        #     selenium2: ~
-        #     show_cmd: open -a Google\ Chrome %s
+
+

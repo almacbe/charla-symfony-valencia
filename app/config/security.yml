@@ -30,12 +30,12 @@ security:
                 csrf_provider: form.csrf_provider
                 check_path: /secure_area/login_check
                 login_path: /secure_area/login
-                default_target_path:            /secure_area/hello/name #default location to redirect after successful login
+                default_target_path: /demo/hello/name #default location to redirect after successful login
 
             anonymous: ~
             logout:
                 path:           /secure_area/logout
-                target:         /secure_area/connect
+                target:         /secure_area/login
 
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
